@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>媒體小偵探：打擊假訊息與大腦外包</title>
+    <!-- 引入 Tailwind CSS CDN，無須依賴其他重型框架 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 紅焰教學 - 互動式網頁專屬樣式 (蒙德里安風格基礎) */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F4F4F4; /* 蒙德里安白底 */
+            color: #1A1A1A; /* 蒙德里安純黑 */
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 8px 8px 0px #1A1A1A;
+        }
+        .mondrian-border {
+            border: 4px solid #1A1A1A;
+        }
+        /* 燈箱背景遮罩，預設隱藏 (嚴格遵照 style.display 切換) */
+        #lightbox {
+            display: none; 
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <!-- 主視覺區 Hero Section -->
+    <header class="max-w-5xl mx-auto bg-[#F2C12E] mondrian-border p-8 mb-8 rounded-xl shadow-[8px_8px_0px_#1A1A1A] relative overflow-hidden">
+        <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-wide text-[#1A1A1A]">🕵️‍♂️ 媒體小偵探訓練營</h1>
+        <p class="text-xl md:text-2xl font-bold text-gray-800">
+            網路世界真真假假，你的大腦去放假了嗎？<br>
+            跟著「紅焰教學」，一起找回思考超能力！
+        </p>
+    </header>
+
+    <!-- 內容卡片網格 (Dashboard / CSS Grid) -->
+    <main class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        
+        <!-- 卡片 1：大腦外包 -->
+        <div class="bg-white mondrian-border rounded-xl p-6 card-hover cursor-pointer flex flex-col items-center text-center" 
+             onclick="openLightbox('🧠 什麼是「大腦外包」？', '我們每天看 YouTube、滑短影音，演算法推什麼我們就看什麼。<br><br>這就像把「思考」的工作交給了手機，自己的大腦跑去放假了！別人說什麼就信什麼，這就是危險的「大腦外包」。', '🧐', '#D92525')">
+            <div class="text-7xl mb-4">🧠</div>
+            <h2 class="text-2xl font-bold mb-2">大腦外包危機</h2>
+            <p class="text-gray-600 font-medium">你的思考，被手機控制了嗎？點擊了解！</p>
+        </div>
+
+        <!-- 卡片 2：假訊息 -->
+        <div class="bg-white mondrian-border rounded-xl p-6 card-hover cursor-pointer flex flex-col items-center text-center"
+             onclick="openLightbox('🐺 假訊息的偽裝騙局', '假訊息喜歡穿上「超誇張標題」或「讓你生氣恐慌的照片」的偽裝衣來騙你點擊。<br><br>記住小偵探法則：越是讓你情緒激動的內容，越要停下來懷疑它是不是假的！', '🚨', '#005C8A')">
+            <div class="text-7xl mb-4">🐺</div>
+            <h2 class="text-2xl font-bold mb-2">假訊息的偽裝</h2>
+            <p class="text-gray-600 font-medium">狼披著羊皮，假新聞也愛偽裝！</p>
+        </div>
+
+        <!-- 卡片 3：查核法寶 -->
+        <div class="bg-white mondrian-border rounded-xl p-6 card-hover cursor-pointer flex flex-col items-center text-center"
+             onclick="openLightbox('🔍 破案三法寶', '1. 找來源：這是誰說的？專家還是路人？<br><br>2. 查日期：這是今天發生的，還是十年前的舊新聞？<br><br>3. 動動腦：把標題丟去 Google 查一下，別急著分享！', '🛡️', '#F2C12E')">
+            <div class="text-7xl mb-4">🔍</div>
+            <h2 class="text-2xl font-bold mb-2">查證三法寶</h2>
+            <p class="text-gray-600 font-medium">學會這三招，假訊息立刻現出原形。</p>
+        </div>
+
+    </main>
+
+    <!-- 手風琴選單 Accordion (隨堂互動) -->
+    <section class="max-w-5xl mx-auto bg-white mondrian-border rounded-xl p-6 shadow-[8px_8px_0px_#1A1A1A]">
+        <h2 class="text-3xl font-bold mb-6 border-b-4 border-[#1A1A1A] pb-2">💡 隨堂測驗與行動指南</h2>
+        
+        <!-- Accordion Item 1 -->
+        <div class="mb-4 mondrian-border rounded-lg overflow-hidden">
+            <button class="w-full bg-gray-100 p-4 text-left font-bold text-xl hover:bg-gray-200 transition-colors flex justify-between items-center" 
+                    onclick="toggleAccordion('acc-1')">
+                <span>Q: 看到同學傳「明天停課，快分享」的訊息，該怎麼辦？</span>
+                <span id="acc-1-icon">▼</span>
+            </button>
+            <div id="acc-1" class="p-4 bg-white text-lg font-medium" style="display: none;">
+                <span class="text-[#D92525] font-bold">先不要轉傳！</span> 請打開電視新聞，或是到學校官方網站查詢。如果找不到公告，這很可能就是假訊息喔！
+            </div>
+        </div>
+
+        <!-- Accordion Item 2 -->
+        <div class="mb-4 mondrian-border rounded-lg overflow-hidden">
+            <button class="w-full bg-gray-100 p-4 text-left font-bold text-xl hover:bg-gray-200 transition-colors flex justify-between items-center" 
+                    onclick="toggleAccordion('acc-2')">
+                <span>Q: 如何避免自己的「大腦外包」？</span>
+                <span id="acc-2-icon">▼</span>
+            </button>
+            <div id="acc-2" class="p-4 bg-white text-lg font-medium" style="display: none;">
+                每天給自己 10 分鐘的「無手機時間」，自己決定想看什麼書、想玩什麼遊戲，而不是讓演算法自動播放決定你的時間。
+            </div>
+        </div>
+    </section>
+
+    <!-- 燈箱 Lightbox (滿版雙欄展示) -->
+    <div id="lightbox" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" onclick="closeLightbox(event)">
+        <!-- 燈箱內容區塊 (防止點擊事件冒泡關閉) -->
+        <div class="bg-white max-w-4xl w-full mondrian-border rounded-2xl flex flex-col md:flex-row overflow-hidden shadow-2xl relative" onclick="event.stopPropagation()">
+            
+            <!-- 關閉按鈕 -->
+            <button onclick="closeLightbox(event, true)" class="absolute top-4 right-4 text-3xl font-black w-10 h-10 bg-white border-2 border-black rounded-full hover:bg-red-500 hover:text-white transition-colors flex items-center justify-center z-10">
+                &times;
+            </button>
+
+            <!-- 左側大圖/主視覺區 -->
+            <div id="lb-left" class="md:w-2/5 p-8 flex items-center justify-center text-9xl bg-[#D92525] transition-colors duration-300">
+                <span id="lb-icon">🧠</span>
+            </div>
+
+            <!-- 右側解說區 -->
+            <div class="md:w-3/5 p-8 flex flex-col justify-center bg-[#F4F4F4]">
+                <h2 id="lb-title" class="text-3xl md:text-4xl font-black mb-6 text-[#1A1A1A]">標題</h2>
+                <p id="lb-desc" class="text-xl md:text-2xl leading-relaxed font-medium text-gray-800">
+                    詳細內容說明。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 原生 JS 邏輯區 -->
+    <script>
+        // 初始化 Web Audio API (輕量級互動音效，無需外部圖床/音效檔)
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function playSound(type) {
+            if (!audioCtx) audioCtx = new AudioContext();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'pop') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.15);
+            }
+        }
+
+        // 開啟燈箱
+        function openLightbox(title, desc, icon, bgColor) {
+            playSound('click');
+            document.getElementById('lb-title').innerHTML = title;
+            document.getElementById('lb-desc').innerHTML = desc;
+            document.getElementById('lb-icon').innerText = icon;
+            document.getElementById('lb-left').style.backgroundColor = bgColor;
+            
+            // 嚴格使用 style.display 切換
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+
+        // 關閉燈箱
+        function closeLightbox(event, force = false) {
+            if (force || event.target.id === 'lightbox') {
+                playSound('pop');
+                document.getElementById('lightbox').style.display = 'none';
+            }
+        }
+
+        // 監聽 ESC 鍵關閉燈箱
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('lightbox').style.display === 'flex') {
+                closeLightbox(e, true);
+            }
+        });
+
+        // 手風琴選單切換
+        function toggleAccordion(id) {
+            playSound('click');
+            const content = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                icon.innerText = '▲';
+            } else {
+                content.style.display = 'none';
+                icon.innerText = '▼';
+            }
+        }
+    </script>
+</body>
+</html>
